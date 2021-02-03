@@ -1,0 +1,39 @@
+import java.io.*;
+import java.util.*;
+
+public class cowjog {
+
+    public static int t;
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader f = new BufferedReader(new FileReader("cowjog.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("cowjog.out")));
+        StringTokenizer st = new StringTokenizer(f.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        t = Integer.parseInt(st.nextToken());
+        long[] end = new long[n];
+
+        for (int i = 0; i < n; i++) {
+            StringTokenizer st1 = new StringTokenizer(f.readLine());
+            long start = Integer.parseInt(st1.nextToken());
+            long time = Integer.parseInt(st1.nextToken());
+
+            end[i] = start + (time * t);
+
+        }
+
+        int groups = 1;
+        long prev = end[n-1];
+        for(int i = n-1; i >= 0; i--){
+            if(end[i] < prev){
+                groups++;
+                prev = Math.min(prev, end[i]);
+            }
+        }
+
+        out.println(groups);
+
+        f.close();
+        out.close();
+    }
+}
