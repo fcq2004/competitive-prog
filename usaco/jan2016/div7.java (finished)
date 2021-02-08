@@ -1,0 +1,60 @@
+import java.io.*;
+import java.util.*;
+
+public class div7 {
+
+    public static int n;
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader f = new BufferedReader(new FileReader("div7.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("div7.out")));
+        n = Integer.parseInt(f.readLine());
+        Val[] pref = new Val[7];
+
+        int[] nums = new int[n];
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += Integer.parseInt(f.readLine()) % 7;
+            nums[i] = sum % 7;
+        }
+
+        for(int i = 0; i < 7; i++){
+            Val v = new Val(Integer.MAX_VALUE, 0);
+            pref[i] = v;
+        }
+
+        for(int i = 0; i < n; i++){
+            int curPref = nums[i];
+            if(pref[curPref].start == Integer.MAX_VALUE){
+                pref[curPref].start = i;
+            }
+            else {
+                pref[curPref].end = i;
+            }
+        }
+
+        int max = 0;
+        for(Val cur : pref){
+            int diff = cur.end - cur.start;
+            max = Math.max(max, diff);
+        }
+
+        out.println(max);
+
+        f.close();
+        out.close();
+    }
+
+    static class Val {
+        int start, end;
+    
+        public Val(int start, int end){
+          this.start = start;
+          this.end = end;
+        }
+
+        public String toString() {
+            return "start: " + start + ", end: " + end;
+        }
+    }
+}
