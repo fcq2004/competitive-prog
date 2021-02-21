@@ -1,0 +1,65 @@
+/*
+ID: amethys2
+LANG: JAVA
+TASK: castle
+*/
+import java.io.*;
+import java.util.*;
+
+public class castle {
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader f = new BufferedReader(new FileReader("castle.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("castle.out")));
+        StringTokenizer st = new StringTokenizer(f.readLine());
+        int M = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(st.nextToken());
+        char[][] castle = new char[3*N][4*M];
+        for(int i = 0; i < 3*N; i++){
+            //vertical
+            castle[i][0] = '#';
+            castle[i][4*M-1] = '#';
+        }
+        for(int j = 0; j < 4*M; j++){
+            //horizontal
+            castle[0][j] = '#';
+            castle[3*N-1][j] = '#';
+        }
+
+        for(int r = 0; r < N; r++) {
+            StringTokenizer st1 = new StringTokenizer(f.readLine());
+            for(int c = 0; c < M; c++){
+                int walls = Integer.parseInt(st1.nextToken());
+                if(walls % 2 == 1){ //west
+                    for(int i = 0; i < 3; i++){
+                        castle[r*3+i][c*4] = '#';
+                    }
+                    walls--;
+                }
+                if(walls - 8 > 0){ //south
+                    walls -= 8;
+                    for(int i = 0; i < 4; i++){
+                        castle[r*3+2][c*4+i] = '#';
+                    }
+                }
+                if(walls - 4 > 0){ //east
+                    walls -= 4;
+                    for(int i = 0; i < 3; i++){
+                        castle[r*3+i][c*4+3] = '#';
+                    }
+                }
+                if(walls - 2 > 0){ //north
+                    walls -= 2;
+                    for(int i = 0; i < 4; i++){
+                        castle[r*3][c*4+i] = '#';
+                    }
+                }
+            }
+        }
+
+        for(char[] ar : castle){
+            System.out.println(Arrays.toString(ar));
+        }
+    }
+
+}
