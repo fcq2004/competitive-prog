@@ -1,0 +1,80 @@
+/*
+ID: amethys2
+LANG: JAVA
+TASK: sort3
+*/
+import java.io.*;
+import java.util.*;
+
+public class sort3 {
+    public static int count, one, two, three;
+    public static int[] ar;
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader f = new BufferedReader(new FileReader("sort3.in"));
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("sort3.out")));
+        int N = Integer.parseInt(f.readLine());
+        ar = new int[N];
+        one = 0;
+        two = 0;
+        three = 0;
+        count = 0;
+        
+        for(int i = 0; i < N; i++){
+            ar[i] = Integer.parseInt(f.readLine());
+            if(ar[i] == 1) {
+                one++;
+            }
+            else if(ar[i] == 2){
+                two++;
+            }
+            else if(ar[i] == 3){
+                three++;
+            }
+        }
+        int oneTwos = 0;
+        int oneThrees = 0;
+        int twoOnes = 0;
+        int twoThrees = 0;
+        int threeOnes = 0;
+        int threeTwos = 0;
+
+        for(int i = 0; i < one; i++){
+            if(ar[i] == 2){
+                oneTwos++;
+            }
+            else if (ar[i] == 3){
+                oneThrees++;
+            }
+        }
+        for(int i = 0; i < two; i++){
+            if(ar[one + i] == 1){
+                twoOnes++;
+            }
+            else if(ar[one + i] == 3){
+                twoThrees++;
+            }
+        }
+        for(int i = 0; i < three; i++){
+            if(ar[one + two+ i] == 1){
+                threeOnes++;
+            }
+            if(ar[one + two+ i] == 2){
+                threeTwos++;
+            }
+        }
+
+        int max = 0;
+        count += Math.min(oneTwos, twoOnes);
+        max = Math.max(max, Math.abs(oneTwos - twoOnes));
+        count += Math.min(twoThrees, threeTwos);
+        max = Math.max(max, Math.abs(twoThrees - threeTwos));
+        count += Math.min(oneThrees, threeOnes);
+        max = Math.max(max, Math.abs(oneThrees - threeOnes));
+
+        count += max * 2;
+
+        out.println(count);
+        out.close();
+    }
+}
